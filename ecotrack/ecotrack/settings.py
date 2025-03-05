@@ -62,6 +62,7 @@ REST_FRAMEWORK = {
     'rest_framework.filters.OrderingFilter',
     'rest_framework.filters.SearchFilter',
     ),
+    
 }
 
 REST_FRAMEWORK['DEFAULT_PAGINATION_CLASS'] = 'rest_framework.pagination.PageNumberPagination'
