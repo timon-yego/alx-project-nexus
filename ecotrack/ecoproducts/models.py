@@ -16,6 +16,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     stock = models.PositiveIntegerField()
     carbon_footprint = models.FloatField()  # Carbon footprint per unit
+    image = models.ImageField(upload_to="product_images/", blank=True, null=True)
 
     def __str__(self):
         return self.name
