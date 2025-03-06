@@ -1,7 +1,7 @@
 # ecoproducts/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CategoryViewSet, ProductViewSet, CarbonDataViewSet
+from .views import ProductViewSet, CategoryViewSet, CarbonDataViewSet
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)

@@ -1,22 +1,20 @@
 from django.shortcuts import render
-from rest_framework import generics, permissions
+from rest_framework import viewsets, generics, permissions
 from .models import EcoAction, Reward, CarbonImpact
 from .serializers import EcoActionSerializer, RewardSerializer, CarbonImpactSerializer
 
 # Create your views here.
 
 
-class EcoActionListCreateView(generics.ListCreateAPIView):
+class EcoActionViewSet(viewsets.ModelViewSet):
     queryset = EcoAction.objects.all()
     serializer_class = EcoActionSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
-class RewardListCreateView(generics.ListCreateAPIView):
+class RewardViewSet(viewsets.ModelViewSet):
     queryset = Reward.objects.all()
     serializer_class = RewardSerializer
-    permission_classes = [permissions.IsAuthenticated]
 
-class CarbonImpactListCreateView(generics.ListCreateAPIView):
+    
+class CarbonImpactViewSet(viewsets.ModelViewSet):
     queryset = CarbonImpact.objects.all()
     serializer_class = CarbonImpactSerializer
-    permission_classes = [permissions.IsAuthenticated]

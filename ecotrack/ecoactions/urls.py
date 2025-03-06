@@ -1,8 +1,12 @@
-from django.urls import path
-from .views import EcoActionListCreateView, RewardListCreateView, CarbonImpactListCreateView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import EcoActionViewSet, RewardViewSet, CarbonImpactViewSet
+
+router = DefaultRouter()
+router.register('actions', EcoActionViewSet)
+router.register('rewards', RewardViewSet)
+router.register('carbon-impact', CarbonImpactViewSet)
 
 urlpatterns = [
-    path('actions/', EcoActionListCreateView.as_view(), name='action-list'),
-    path('rewards/', RewardListCreateView.as_view(), name='reward-list'),
-    path('carbon-impact/', CarbonImpactListCreateView.as_view(), name='carbon-impact-list'),
+    path('', include(router.urls)),
 ]

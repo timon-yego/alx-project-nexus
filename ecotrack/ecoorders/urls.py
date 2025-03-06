@@ -1,8 +1,11 @@
-from django.urls import path
-from .views import OrderListCreateView, OrderDetailView, PaymentCreateView
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import OrderViewSet, PaymentViewSet
+
+router = DefaultRouter()
+router.register('orders', OrderViewSet)
+router.register('payments', PaymentViewSet)
 
 urlpatterns = [
-    path('orders/', OrderListCreateView.as_view(), name='order-list'),
-    path('orders/<int:pk>/', OrderDetailView.as_view(), name='order-detail'),
-    path('payments/', PaymentCreateView.as_view(), name='payment-create'),
+    path('', include(router.urls)),
 ]
