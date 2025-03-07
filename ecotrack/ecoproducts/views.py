@@ -35,6 +35,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     pagination_class = ProductPagination
     parser_classes = (MultiPartParser, FormParser)  # For image uploads
 
+
     @swagger_auto_schema(
         operation_description="Create a new product",
         request_body=ProductSerializer,

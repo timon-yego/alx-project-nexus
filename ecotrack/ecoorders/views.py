@@ -8,6 +8,7 @@ from ecoorders.tasks import send_order_confirmation_email
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 
+
 # Create your views here.
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
