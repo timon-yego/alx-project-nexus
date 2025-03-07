@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'ecoactions',
     'ecoorders',
     'django_filters',
-
+    'drf_yasg',
+    
 ]
 
 AUTH_USER_MODEL = 'ecousers.User'
