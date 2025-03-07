@@ -12,8 +12,8 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    price = models.DecimalField(max_digits=10, decimal_places=2, db_index=True)
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, db_index=True)
     stock = models.PositiveIntegerField()
     carbon_footprint = models.FloatField()  # Carbon footprint per unit
     image = models.ImageField(upload_to="product_images/", blank=True, null=True)

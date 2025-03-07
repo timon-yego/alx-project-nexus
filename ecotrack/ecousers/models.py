@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser,  Group, Permission
 # Create your models here.
 
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,  db_index=True)
     is_eco_enthusiast = models.BooleanField(default=False)
     carbon_footprint = models.FloatField(default=0)  # Total footprint
 
@@ -21,7 +21,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    phone_number = models.CharField(max_length=15, blank=True, null=True)
+    phone_number = models.CharField(max_length=15, blank=True, null=True, db_index=True)
     address = models.TextField(blank=True, null=True)
     city = models.CharField(max_length=100, blank=True, null=True)
     country = models.CharField(max_length=100, blank=True, null=True)
