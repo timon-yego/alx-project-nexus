@@ -7,6 +7,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+from ecoproducts.tasks import update_product_stock
+
 # Create your views here.
 class CategoryViewSet(viewsets.ModelViewSet):
     """API endpoint for managing product categories."""
@@ -30,6 +34,20 @@ class ProductViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'description']
     pagination_class = ProductPagination
     parser_classes = (MultiPartParser, FormParser)  # For image uploads
+
+    @swagger_auto_schema(
+        operation_description="Create a new product",
+        request_body=ProductSerializer,
+        responses={201: ProductSerializer, 400: "Bad Request"},
+    )
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        product_id = response.data["id"]
+
+        # Trigger background task to update stock levels
+        update_product_stock.delay(product_id)
+
+        return response
 
 
 class CarbonDataViewSet(viewsets.ModelViewSet):
