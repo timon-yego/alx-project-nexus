@@ -23,6 +23,29 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
+        operation_description="Create a new order",
+        request_body=OrderSerializer,
+        responses={201: OrderSerializer, 400: "Bad Request"},
+    )
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        order_id = response.data["id"]
+
+        # Send order confirmation email asynchronously
+        send_order_confirmation_email.delay(order_id)
+
+        return Response({"message": "Order placed successfully!", "order": response.data}, status=status.HTTP_201_CREATED)
+
+
+class PaymentViewSet(viewsets.ModelViewSet):
+    """Handles Chapa payment transactions."""
+    
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+    permission_classes = [IsAuthenticated]
+
+
+    @swagger_auto_schema(
         operation_description="Initiate Chapa payment",
         request_body=PaymentSerializer,
         responses={201: "Chapa Payment Initiated", 400: "Error initiating payment"},
@@ -103,11 +126,10 @@ class OrderViewSet(viewsets.ModelViewSet):
 
             # Update Order status
             order = payment.order
-            order.status = "completed"
+            order.status = "paid"
             order.save()
 
             return Response({"message": "Payment successful"}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Payment verification failed"}, status=status.HTTP_400_BAD_REQUEST)
-        
         
