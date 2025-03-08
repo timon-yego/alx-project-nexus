@@ -8,4 +8,5 @@ router.register('payments', PaymentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path("payments/verify/<str:transaction_id>/", PaymentViewSet.as_view({"get": "verify_payment"}), name="verify-payment"),
 ]

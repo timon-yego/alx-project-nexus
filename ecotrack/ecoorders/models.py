@@ -42,7 +42,7 @@ class Payment(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='payment')
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
     transaction_id = models.CharField(max_length=100, unique=True)
-    status = models.CharField(max_length=20, choices=[('success', 'Success'), ('failed', 'Failed')], default='success')
+    status = models.CharField(max_length=20, choices=[('pending','Pending','successful', 'Successful'), ('failed', 'Failed')], default='pending')
     paid_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
