@@ -16,3 +16,25 @@ def send_order_confirmation_email(order_id):
     
     except Order.DoesNotExist:
         return "Order not found"
+
+@shared_task
+def send_payment_confirmation_email(user_email, order_id, transaction_id):
+    """
+    Sends a payment confirmation email to the user.
+    """
+    subject = "Payment Confirmation - EcoTrack"
+    message = f"""
+    Dear Customer,
+
+    Your payment for Order #{order_id} has been successfully received.
+    Transaction ID: {transaction_id}
+
+    Thank you for shopping sustainably with EcoTrack!
+
+    Regards,
+    EcoTrack Team
+    """
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [user_email]
+
+    send_mail(subject, message, from_email, recipient_list)

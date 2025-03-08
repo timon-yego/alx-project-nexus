@@ -184,3 +184,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Redis as broker
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"  # Use your email provider
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "noreply@ecotrack.com"
+EMAIL_HOST_PASSWORD = "Ecotrack@1"
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # The default sender email
