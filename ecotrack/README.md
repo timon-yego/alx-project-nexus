@@ -107,6 +107,7 @@ The **key database tables**:
 
 ## 🚀 Deployment
 ### Deploy to PythonAnywhere 
+Site:[https://timoyegon.pythonanywhere.com/]
 - Use **Gunicorn & Nginx** for production
 - Configure **PostgreSQL** for production database
 - Set up **Celery & Redis** for background tasks
