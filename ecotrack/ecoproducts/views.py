@@ -14,7 +14,7 @@ from ecoproducts.tasks import update_product_stock
 # Create your views here.
 class CategoryViewSet(viewsets.ModelViewSet):
     """API endpoint for managing product categories."""
-    queryset = Category.objects.all()
+    queryset = Category.objects.all().order_by('name')
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
@@ -25,7 +25,7 @@ class ProductPagination(PageNumberPagination):
 
 class ProductViewSet(viewsets.ModelViewSet):
     """API endpoint for managing eco-friendly products."""
-    queryset = Product.objects.all()
+    queryset = Product.objects.all().order_by('name')
     serializer_class = ProductSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter]

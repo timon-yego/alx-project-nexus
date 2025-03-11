@@ -45,6 +45,27 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = '__all__'
 
+class UserProfileSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'profile']
+
+    def update(self, instance, validated_data):
+        profile_data = validated_data.pop('profile', None)
+        instance.username = validated_data.get('username', instance.username)
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+
+        if profile_data:
+            profile_instance = instance.profile
+            for key, value in profile_data.items():
+                setattr(profile_instance, key, value)
+            profile_instance.save()
+
+        return instance
+
 class SustainabilityGoalSerializer(serializers.ModelSerializer):
     class Meta:
         model = SustainabilityGoal
